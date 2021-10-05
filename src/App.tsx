@@ -1,10 +1,12 @@
 import React from "react";
-import Calendar from "./calendar/calendar";
+import Calendar from "./Calendar/Calendar";
+import UseWorkouts from "./Workout/Workouts";
 
 function App() {
   return (
     <>
       <Calendar />
+      <UseWorkouts />
     </>
   );
 }
