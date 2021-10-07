@@ -3,7 +3,7 @@ import { useCallback, useRef } from "react";
 export default function Workouts() {
   const { workouts, addWorkout, reomoveWorkout } = useWorkouts();
   const newWorkoutRef = useRef<HTMLInputElement>(null);
-  const onAddTodo = useCallback(
+  const onAddWorkout = useCallback(
     e => {
       e.preventDefault();
       if (newWorkoutRef.current) {
@@ -16,7 +16,7 @@ export default function Workouts() {
   return (
     <div>
       <h1>Workout List</h1>
-      <form onSubmit={onAddTodo}>
+      <form onSubmit={onAddWorkout}>
         <input type="text" ref={newWorkoutRef} />
       </form>
       {workouts.map(workout => (
@@ -25,6 +25,7 @@ export default function Workouts() {
           <button onClick={() => reomoveWorkout(workout.id)}>Remove</button>
         </div>
       ))}
+      <button>➕</button>
     </div>
   );
 }
