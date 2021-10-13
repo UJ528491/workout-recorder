@@ -2,12 +2,16 @@ import { useReducer, useCallback } from "react";
 
 interface workouts {
   id: number;
-  text: string;
+  name: string;
+  reps?: number;
+  sets?: number;
+  status?: string;
+  log?: string;
 }
 type ActionType =
   | {
       type: "ADD";
-      text: string;
+      name: string;
     }
   | {
       type: "REMOVE";
@@ -21,7 +25,7 @@ export function useWorkouts() {
     (state: workouts[], action: ActionType) => {
       switch (action.type) {
         case "ADD":
-          return [...state, { id: state.length, text: action.text }];
+          return [...state, { id: state.length, name: action.name }];
         case "REMOVE":
           return state.filter(({ id }) => id !== action.id);
         default:
@@ -31,10 +35,10 @@ export function useWorkouts() {
     initialWorkouts
   );
 
-  const addWorkout = useCallback((text: string) => {
+  const addWorkout = useCallback((name: string) => {
     dispatch({
       type: "ADD",
-      text,
+      name,
     });
   }, []);
   const reomoveWorkout = useCallback((id: number) => {

@@ -21,7 +21,7 @@ export default function Workouts() {
       </form>
       {workouts.map(workout => (
         <div key={workout.id}>
-          {workout.text}
+          {workout.name}
           <button onClick={() => reomoveWorkout(workout.id)}>Remove</button>
         </div>
       ))}
