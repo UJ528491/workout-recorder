@@ -3,6 +3,10 @@ import { useReducer, useCallback } from "react";
 interface workouts {
   id: number;
   name: string;
+}
+interface workoutProgram extends workouts {
+  id: number;
+  name: string;
   reps?: number;
   sets?: number;
   status?: string;
@@ -15,6 +19,10 @@ type ActionType =
     }
   | {
       type: "REMOVE";
+      id: number;
+    }
+  | {
+      type: "SET";
       id: number;
     };
 
