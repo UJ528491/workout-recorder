@@ -3,15 +3,12 @@ import { useReducer, useCallback } from "react";
 interface workouts {
   id: number;
   name: string;
-}
-interface workoutProgram extends workouts {
-  id: number;
-  name: string;
   reps?: number;
   sets?: number;
   status?: string;
   log?: string;
 }
+
 type ActionType =
   | {
       type: "ADD";
@@ -24,6 +21,10 @@ type ActionType =
   | {
       type: "SET";
       id: number;
+      reps: number;
+      sets: number;
+      status: string;
+      log?: string;
     };
 
 const initialWorkouts: workouts[] = [];
@@ -36,6 +37,19 @@ export function useWorkouts() {
           return [...state, { id: state.length, name: action.name }];
         case "REMOVE":
           return state.filter(({ id }) => id !== action.id);
+        case "SET":
+          return state.map(workout => {
+            if (workout.id === action.id) {
+              return {
+                ...workout,
+                reps: action.reps,
+                sets: action.sets,
+                status: action.status,
+                log: action.log,
+              };
+            }
+            return workout;
+          });
         default:
           throw new Error();
       }
@@ -49,14 +63,27 @@ export function useWorkouts() {
       name,
     });
   }, []);
-  const reomoveWorkout = useCallback((id: number) => {
+  const removeWorkout = useCallback((id: number) => {
     dispatch({
       type: "REMOVE",
       id,
     });
   }, []);
+  const setWorkout = useCallback(
+    (id: number, reps: number, sets: number, status: string, log?: string) => {
+      dispatch({
+        type: "SET",
+        id,
+        reps,
+        sets,
+        status,
+        log,
+      });
+    },
+    []
+  );
 
-  return { workouts, addWorkout, reomoveWorkout };
+  return { workouts, addWorkout, removeWorkout, setWorkout };
 }
 
 // const item = {
